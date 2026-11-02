@@ -1,0 +1,47 @@
+export function countText(text: string) {
+  const trimmed = text.trim();
+  const words = trimmed ? trimmed.split(/\s+/u).length : 0;
+  const sentences = trimmed ? (trimmed.match(/[^.!?]+[.!?]+|[^.!?]+$/gu) ?? []).filter(s => s.trim()).length : 0;
+  const paragraphs = trimmed ? trimmed.split(/\n\s*\n/u).filter(p => p.trim()).length : 0;
+  return { words, characters: text.length, charactersNoSpaces: text.replace(/\s/gu, "").length, sentences, paragraphs, lines: text ? text.split(/\r?\n/u).length : 0 };
+}
+export function convertCase(value: string, mode: string) {
+  if (mode === "upper") return value.toLocaleUpperCase();
+  if (mode === "lower") return value.toLocaleLowerCase();
+  if (mode === "title") return value.toLocaleLowerCase().replace(/(^|\s)\p{L}/gu, s => s.toLocaleUpperCase());
+  if (mode === "sentence") return value.toLocaleLowerCase().replace(/(^\s*|[.!?]\s+)(\p{L})/gu, (_, prefix, letter) => prefix + letter.toLocaleUpperCase());
+  return value;
+}
+export function formatJson(value: string) {
+  return JSON.stringify(JSON.parse(value), null, 2);
+}
+export function encodeBase64(value: string) {
+  const bytes = new TextEncoder().encode(value);
+  let binary = "";
+  bytes.forEach(byte => binary += String.fromCharCode(byte));
+  return btoa(binary);
+}
+export function decodeBase64(value: string) {
+  const binary = atob(value.trim());
+  const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
+  return new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+}
+export function generatePassword(length: number, options: { upper: boolean; lower: boolean; numbers: boolean; symbols: boolean }) {
+  const groups = [
+    options.upper ? "ABCDEFGHIJKLMNOPQRSTUVWXYZ" : "",
+    options.lower ? "abcdefghijklmnopqrstuvwxyz" : "",
+    options.numbers ? "0123456789" : "",
+    options.symbols ? "!@#$%^&*()-_=+[]{}?" : ""
+  ].filter(Boolean);
+  if (!groups.length) throw new Error("Choose at least one character type.");
+  if (!Number.isInteger(length) || length < 8 || length > 128) throw new Error("Length must be between 8 and 128.");
+  const alphabet = groups.join("");
+  const bytes = new Uint32Array(length);
+  crypto.getRandomValues(bytes);
+  const chars = groups.map(group => group[bytes[groups.indexOf(group)] % group.length]);
+  for (let i = chars.length; i < length; i++) chars.push(alphabet[bytes[i] % alphabet.length]);
+  for (let i = chars.length - 1; i > 0; i--) {
+    const j = bytes[i] % (i + 1); [chars[i], chars[j]] = [chars[j], chars[i]];
+  }
+  return chars.join("");
+}
