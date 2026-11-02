@@ -1,17 +1,11 @@
 import type { NextConfig } from "next";
+const isGitHubPages = process.env.GITHUB_PAGES === "true";
 const nextConfig: NextConfig = {
+  output: "export",
+  trailingSlash: true,
+  basePath: isGitHubPages ? "/toolbox-pro" : "",
+  images: { unoptimized: true },
   poweredByHeader: false,
-  reactStrictMode: true,
-  async headers() {
-    return [{
-      source: "/:path*",
-      headers: [
-        { key: "X-Content-Type-Options", value: "nosniff" },
-        { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-        { key: "X-Frame-Options", value: "DENY" },
-        { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" }
-      ]
-    }];
-  }
+  reactStrictMode: true
 };
 export default nextConfig;
