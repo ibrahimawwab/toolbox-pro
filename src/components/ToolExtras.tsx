@@ -1,5 +1,5 @@
-import Image from "next/image";
 "use client";
+import Image from "next/image";
 import {useState} from "react";
 import QRCode from "qrcode";
 import {PDFDocument} from "pdf-lib";
