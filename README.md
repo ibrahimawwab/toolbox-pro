@@ -1,30 +1,21 @@
 # ToolBox Pro
 
-**Free, privacy-conscious online tools for everyday digital tasks.**
+Free, privacy-conscious online tools for everyday digital tasks.
 
-ToolBox Pro is an independent utility platform founded by Ibrahim Awwab. The project aims to make common PDF, image, text, developer, security and productivity tasks simple and accessible.
+**Founder:** Ibrahim Awwab  
+**Repository:** https://github.com/ibrahimawwab/toolbox-pro
 
-> **Development status:** Early development. Features are added incrementally; do not treat planned tools as already implemented.
-
-## Principles
-
-- Useful tools with clear inputs, outputs and errors.
-- Prefer browser-side processing for sensitive text and files.
-- No account required for core utilities.
-- Accessible, responsive interfaces and transparent limitations.
-- No fabricated reviews, usage statistics, awards or security guarantees.
+## Current status
+This project is in active development. The initial implementation includes a word counter, case converter, JSON formatter, Base64 encoder/decoder, password generator, percentage calculator, QR code generator, image-to-WebP compressor and PDF merger. Verify each feature in the deployed version before relying on it. Other directory entries are marked coming soon.
 
 ## Technology
-
-- Next.js App Router
-- React and TypeScript
+- Next.js App Router, React and TypeScript
 - Tailwind CSS
-- Vitest and Playwright planned for automated testing
-- GitHub Actions for continuous integration
+- Vitest
+- Browser-side utilities and file processing where practical
 
-## Local development
-
-Requires a current Node.js LTS release and npm.
+## Run locally
+Requires Node.js 20.9 or later.
 
 ```bash
 npm install
@@ -33,24 +24,25 @@ npm run dev
 
 Open http://localhost:3000.
 
+## Validation
 ```bash
-npm run lint
 npm run typecheck
+npm test
+npm run lint
 npm run build
 ```
 
-## Privacy and security
+## Production configuration
+Set `NEXT_PUBLIC_SITE_URL` to the exact public origin in your hosting environment before deployment so sitemap and robots output point to the correct origin. Do not leave a placeholder URL in production.
 
-Core tools should process data locally in the browser whenever practical. Never enter secrets into a tool unless its purpose and processing behavior are understood. Do not use this project as a substitute for a security audit or professional advice.
+## Free hosting
+Use a provider-supported free tier and its free subdomain to keep initial costs at $0. A custom domain is optional and may cost money. Free-tier terms, resource limits and commercial-use rules can change; verify them before deployment.
 
-See [SECURITY.md](SECURITY.md) for responsible vulnerability reporting.
-
-## Attribution and licensing
-
-Founded by **Ibrahim Awwab**, also known professionally as **Dr. Muhammad Ibrahim Awwab**. AI-assisted development should be described honestly; contributors should not misrepresent authorship or test results.
-
-The project is intended to use the MIT License; see [LICENSE](LICENSE). Third-party packages remain subject to their own licenses.
+## Privacy
+Most current utilities run locally in the browser. The hosting provider still receives normal network requests, and external links have their own policies. Review the privacy page against actual deployment and any analytics added later.
 
 ## Contributing
+See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). Contributions should include tests where practical and clearly distinguish implemented behavior from planned work.
+## License
+MIT, see [LICENSE](LICENSE).
