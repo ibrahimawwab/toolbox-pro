@@ -1,0 +1,2 @@
+import {describe,expect,it} from "vitest";import {convertUnit,convertTemperature} from "./units";
+describe("unit conversions",()=>{it("converts kilometers to meters",()=>expect(convertUnit(1,"Length","km","m")).toBe(1000));it("converts kilograms to pounds",()=>expect(convertUnit(1,"Mass","kg","lb")).toBeCloseTo(2.20462,4));it("converts Celsius to Fahrenheit",()=>expect(convertTemperature(0,"C","F")).toBe(32));});
